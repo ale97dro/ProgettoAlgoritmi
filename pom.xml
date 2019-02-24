@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>application.Prova</mainClass>
+                            <mainClass>application.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
