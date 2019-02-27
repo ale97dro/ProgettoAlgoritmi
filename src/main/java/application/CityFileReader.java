@@ -14,7 +14,6 @@ public class CityFileReader implements CityReader
         try
         {
             BufferedReader reader = new BufferedReader(new FileReader(path));
-
             String row = null;
 
             for (int i = 0; i < 7; i++)
@@ -22,7 +21,7 @@ public class CityFileReader implements CityReader
 
             while ((row = reader.readLine()) != null) {
                 if (!row.equals("EOF")) {
-                    System.out.println(row);
+                   // System.out.println(row);
                     String[] informations = row.split(" ");
                     cities.add(City.create(Integer.parseInt(informations[0]), Double.parseDouble(informations[1]), Double.parseDouble(informations[2])));
                 }

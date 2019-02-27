@@ -8,7 +8,10 @@ public class Main
 {
     public static void main(String[] args)
     {
-        String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\ch130.tsp";
+        //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\ch130.tsp";
+        //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
+        String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\eil76.tsp";
+
         List<City> cities;
 
         cities = new CityFileReader().read(path);
@@ -19,8 +22,10 @@ public class Main
 
         int[][] distances = tour.getDistances();
 
-        printMatrix(distances);
+      //  printMatrix(distances);
 
+
+        NearestNeighbor.run(cities, distances);
     }
 
     public static void printMatrix(int[][] matrix)
