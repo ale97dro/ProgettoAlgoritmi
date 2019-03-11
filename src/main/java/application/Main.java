@@ -58,6 +58,9 @@ public class Main extends Application
 
         root.getChildren().add(tour.getVisualTour());
 
+
+        System.out.println("\nCosto tour calcolato: " + tour.computeTourCost());
+
         primaryStage.show();
     }
 }

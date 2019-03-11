@@ -22,7 +22,7 @@ public class NearestNeighbor {
         {
             for (int i = 0; i < distances.length; i++)
             {
-                if (min > distances[start][column] && distances[start][column] != 0 && !orderedCity.contains(column))
+                if (min > distances[start][column] && distances[start][column] != 0 && !orderedCity.contains(column)) //refactor: orderedCity deve rimanere ma qui va usato un array per diminuire complessità
                 {
                     min = distances[start][column];
                     neigh = column;

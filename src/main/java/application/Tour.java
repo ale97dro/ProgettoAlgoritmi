@@ -14,12 +14,14 @@ public class Tour
     private int[][] distanceMatrix;
 
     private List<Integer> orderedCity;
+    private int tourCost;
 
 
     public Tour(List<City> cities)
     {
         this.cities = cities;
         distanceMatrix = new int[cities.size()][cities.size()];
+        tourCost = 0;
     }
 
     public void calcuateDistances(DistanceCalculator calculator)
@@ -43,11 +45,32 @@ public class Tour
         this.orderedCity = orderedCity;
     }
 
+    public void setTourCost(int cost)
+    {
+        this.tourCost = cost;
+    }
+
+    public int getTourCost()
+    {
+        return tourCost;
+    }
+
+    public int computeTourCost()
+    {
+        tourCost = 0;
+
+        for(int i = 0; i < orderedCity.size()-2;i++)
+            tourCost += distanceMatrix[orderedCity.get(i)][orderedCity.get(i+1)];
+
+
+        return tourCost;
+    }
+
     private Path getPath()
     {
         Path path = new Path();
         path.getElements().add(new MoveTo(cities.get(orderedCity.get(0)).getX(), cities.get(orderedCity.get(0)).getY()));
-        for(int i = 1;i<orderedCity.size()-1;i++){
+        for(int i = 1;i<orderedCity.size()-1;i++){ //se tolgo il -1 dalla lista, devo fare i<orderedCity.size()
             path.getElements().add(new LineTo(cities.get(orderedCity.get(i)).getX(), cities.get(orderedCity.get(i)).getY()));
         }
 
@@ -63,7 +86,8 @@ public class Tour
 
         //add points
         tourVisual.getChildren().add(new Circle((float) cities.get(orderedCity.get(0)).getX(), (float) cities.get(orderedCity.get(0)).getY(), 5));
-        for (int i = 1; i < orderedCity.size()-1; i++) {
+        for (int i = 1; i < orderedCity.size()-1; i++) { //se tolgo il -1 dalla lista, devo fare i<orderedCity.size()
+            //se voglio cambiare il colore, faccio new Circle qui dentro e lo aggiungo
             tourVisual.getChildren().add(new Circle((float) cities.get(orderedCity.get(i)).getX(), (float) cities.get(orderedCity.get(i)).getY(), 3));
         }
         return tourVisual;
