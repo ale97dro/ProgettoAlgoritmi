@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NearestNeighbor {
 
-    public static void run(List<City> cities, int[][] distances)
+    public static List<Integer> run(List<City> cities, int[][] distances)
     {
         List<Integer> orderedCity = new ArrayList<>();
 
@@ -13,6 +13,7 @@ public class NearestNeighbor {
         int column = 0;
         int neigh = -1; //numero del nodo più vicino
         int start = 0;
+        start = 0;
         int cost = 0;
 
         orderedCity.add(0);
@@ -39,5 +40,10 @@ public class NearestNeighbor {
             min = Integer.MAX_VALUE;
         }
         System.out.println("Cost "+cost);
+
+        for(int c : orderedCity)
+            System.out.print(c + " -> ");
+
+        return orderedCity;
     }
 }
