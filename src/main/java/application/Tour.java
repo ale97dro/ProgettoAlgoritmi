@@ -62,6 +62,7 @@ public class Tour
         for(int i = 0; i < orderedCity.size()-2;i++)
             tourCost += distanceMatrix[orderedCity.get(i)][orderedCity.get(i+1)];
 
+        tourCost += distanceMatrix[orderedCity.get(0)][orderedCity.get(orderedCity.size()-2)];
 
         return tourCost;
     }
