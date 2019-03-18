@@ -49,7 +49,7 @@ public class Main extends Application
 
 
         tour.setOrderedCity(NearestNeighbor.run(cities, distances));
-
+        tour.setOrderedCity(_2opt.runWiki(tour, distances));
 
 
         Group root = new Group();

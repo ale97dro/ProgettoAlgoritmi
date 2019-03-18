@@ -35,6 +35,11 @@ public class City
         return y;
     }
 
+    public int distance(City city)
+    {
+        return new EuclideanDistance().calculateDistance(this, city);
+    }
+
     @Override
     public boolean equals(Object o)
     {

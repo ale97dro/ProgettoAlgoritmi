@@ -13,7 +13,7 @@ public class Tour
     private List<City> cities;
     private int[][] distanceMatrix;
 
-    private List<Integer> orderedCity;
+   git private List<Integer> orderedCity;
     private int tourCost;
 
 
@@ -44,6 +44,8 @@ public class Tour
     {
         this.orderedCity = orderedCity;
     }
+
+    public List<Integer> getOrderedCity() { return this.orderedCity; }
 
     public void setTourCost(int cost)
     {
