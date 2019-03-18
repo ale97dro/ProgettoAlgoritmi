@@ -13,7 +13,7 @@ public class Tour
     private List<City> cities;
     private int[][] distanceMatrix;
 
-   git private List<Integer> orderedCity;
+    private List<Integer> orderedCity;
     private int tourCost;
 
 
