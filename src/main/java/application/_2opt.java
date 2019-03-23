@@ -176,15 +176,16 @@ public class _2opt
 //    }
 
 
-    public static Tour _2opt(Tour tour)
+    public static Tour _2opt(Tour oldTour)
     {
-        //Tour tour = new Tour();
-        //tour.setDistanceMatrix(oldTour.getDistanceMatrix());
+        Tour tour = new Tour();
+        //tour.setCities(oldTour.getCities());
+        //tour.setBestKnown(oldTour.getBestKnown());
+        tour.setDistanceMatrix(oldTour.getDistanceMatrix());
 
 
-//        for(int i : oldTour.getTour())
-//            tour.addTourCity(i);
-
+        for(int i : oldTour.getTour())
+            tour.addTourCity(i);
         tour.getTour().remove(tour.getTour().size()-1);
 
         //tour.getTour()
@@ -235,6 +236,8 @@ public class _2opt
 
         tour.addTourCity(-1);
 
+        tour.setCities(oldTour.getCities());
+        tour.setBestKnown(oldTour.getBestKnown());
         return tour;
     }
 
@@ -242,6 +245,7 @@ public class _2opt
     {
         Tour newTour = new Tour();
         newTour.setDistanceMatrix(tour.getDistanceMatrix());
+
 
         int size = tour.getTour().size();
 
