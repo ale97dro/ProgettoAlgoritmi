@@ -30,16 +30,16 @@ public class Main extends Application
 
     public static double calcoloErrore(int tourCost, int bestKnown)
     {
-        return ((tourCost - bestKnown) / bestKnown);
+        return ((tourCost - bestKnown) / (double)bestKnown) * 100;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\ch130.tsp";
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
         String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
 
+       // String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\lin318.tsp";
        // List<City> cities;
 
         Tour tour = new CityFileReader().read(path);
@@ -54,7 +54,21 @@ public class Main extends Application
 
 
         tour.setTour(NearestNeighbor.run(tour.getCities(), distances));
-        //tour.setTour(_2opt.runWiki(tour, distances));
+
+        System.out.println("\nNN error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+
+        _2opt._2opt(tour);
+        tour.getTour().add(-1);
+        System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+
+        System.out.println("2opt");
+
+        for(int i: tour.getTour())
+            System.out.print(i + " -> ");
+
+       // tour = _2opt.run(tour);
+
+
 
 
         Group root = new Group();

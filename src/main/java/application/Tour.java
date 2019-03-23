@@ -104,6 +104,11 @@ public class Tour
         }
     }
 
+    public void addTourCity(int city)
+    {
+        tour.add(city);
+    }
+
     public List<City> getCities() {
         return cities;
     }
@@ -121,7 +126,7 @@ public class Tour
         tourCost = 0;
 
         try {
-            System.out.println("Tour size : " + tour.size());
+           // System.out.println("Tour size : " + tour.size());
             for (int i = 0; i < tour.size() - 2; i++)
                 tourCost += distanceMatrix[tour.get(i)][tour.get(i + 1)];
 
@@ -129,7 +134,7 @@ public class Tour
         }
         catch (Exception ex)
         {
-            System.out.println("erro");
+            ex.printStackTrace();
             //TODO: errore
         }
         return tourCost;
@@ -141,6 +146,19 @@ public class Tour
 
     public void setBestKnown(int bestKnown) {
         this.bestKnown = bestKnown;
+    }
+
+    public int[][] getDistanceMatrix() {
+        return distanceMatrix;
+    }
+
+    public void setDistanceMatrix(int[][] distanceMatrix) {
+        this.distanceMatrix = distanceMatrix;
+    }
+
+    public int distanceBetweenCities(int a, int b)
+    {
+        return distanceMatrix[a][b];
     }
 
     //Per disegnare

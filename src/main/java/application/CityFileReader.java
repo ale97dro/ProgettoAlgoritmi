@@ -16,8 +16,14 @@ public class CityFileReader implements CityReader
             BufferedReader reader = new BufferedReader(new FileReader(path));
             String row = null;
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 5; i++)
                 reader.readLine();
+
+            String bestKnownRaw = reader.readLine();
+
+            int bestKnown = Integer.parseInt(bestKnownRaw.split(" ")[2]);
+
+            reader.readLine();
 
             while ((row = reader.readLine()) != null) {
                 if (!row.equals("EOF")) {
@@ -27,8 +33,11 @@ public class CityFileReader implements CityReader
                 }
             }
 
-            return new Tour(cities);
+            Tour tour = new Tour(cities);
 
+            tour.setBestKnown(bestKnown);
+
+            return tour;
            // return cities;
         }
         catch (IOException e)

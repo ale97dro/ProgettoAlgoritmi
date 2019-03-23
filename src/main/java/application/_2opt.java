@@ -106,71 +106,164 @@ public class _2opt
 //        return newTour;
 //    }
 
-    public static void run(Tour tour)
+//    public static Tour run(Tour tour)
+//    {
+//        int size = tour.getTour().size() - 1;
+//
+//        Tour newTour = new Tour();
+//
+//        newTour.setDistanceMatrix(tour.getDistanceMatrix());
+//
+//        for(int i = 0; i < size; i++)
+//            newTour.setTourCity(i, tour.getTourCity(i));
+//
+//        int improve = 0;
+//        int iteration = 0;
+//
+//        while(improve < 800)
+//        {
+//            int bestDistance = tour.computeTourCost();
+//
+//            for(int i = 1; i < size - 1; i++)
+//            {
+//                for(int k = i + 1; k < size; k++)
+//                {
+//                    _2optSwap(i, k, tour, newTour);
+//                    iteration++;
+//                    int newDistance = newTour.computeTourCost();
+//
+//                    if(newDistance < bestDistance)
+//                    {
+//                        improve = 0;
+//
+//                        for(int j = 0; j < size; j++)
+//                        {
+//                            tour.setTourCity(j, newTour.getTourCity(j));
+//                        }
+//
+//                        bestDistance = newDistance;
+//                    }
+//                }
+//            }
+//
+//            improve++;
+//        }
+//
+//        return tour;
+//    }
+//
+//    private static void _2optSwap(int i, int k, Tour tour, Tour newTour)
+//    {
+//        int size = tour.getTour().size() - 1;
+//
+//        for(int c = 0; c <= i - 1; c++)
+//        {
+//            newTour.setTourCity(c, tour.getTourCity(c));
+//        }
+//
+//        int dec = 0;
+//
+//        for(int c = i; c <= k; c++)
+//        {
+//            newTour.setTourCity(c, tour.getTourCity( k - dec));
+//            dec++;
+//        }
+//
+//        for(int c = k + 1; c < size; c++)
+//        {
+//            newTour.setTourCity(c, tour.getTourCity(c));
+//        }
+//    }
+
+
+    public static Tour _2opt(Tour tour)
     {
-        int size = tour.getTour().size() - 1;
+        //Tour tour = new Tour();
+        //tour.setDistanceMatrix(oldTour.getDistanceMatrix());
+
+
+//        for(int i : oldTour.getTour())
+//            tour.addTourCity(i);
+
+        tour.getTour().remove(tour.getTour().size()-1);
+
+        //tour.getTour()
 
         Tour newTour = new Tour();
 
-        for(int i = 0; i < size; i++)
-            newTour.setTourCity(i, tour.getTourCity(i));
+        newTour.setDistanceMatrix(tour.getDistanceMatrix());
 
+        int bestDistance = tour.computeTourCost();
+        int newDistance;
+        int swaps = 1;
         int improve = 0;
-        int iteration = 0;
+        int iterations = 0;
+        long comparisions = 0;
 
-        while(improve < 800)
+        int size = tour.getTour().size();
+
+        while(swaps != 0)
         {
-            int bestDistance = tour.computeTourCost();
+            swaps = 0;
 
-            for(int i = 1; i < size - 1; i++)
+            for(int i = 1; i < size - 2; i++)
             {
-                for(int k = i + 1; k < size; k++)
+                for(int j = i + 1; j < size - 1; j++)
                 {
-                    _2optSwap(i, k, tour, newTour);
-                    iteration++;
-                    int newDistance = newTour.computeTourCost();
+                    comparisions++;
 
-                    if(newDistance < bestDistance)
+                    if((tour.distanceBetweenCities(i, i-1) + tour.distanceBetweenCities(j+1, j)) >= (tour.distanceBetweenCities(i, j+1) + tour.distanceBetweenCities(i-1, j)))
                     {
-                        improve = 0;
+                        newTour = swap(tour, i, j);
 
-                        for(int j = 0; j < size; j++)
+                        newDistance = newTour.computeTourCost();
+
+                        if(newDistance < bestDistance)
                         {
-                            tour.setTourCity(j, newTour.getTourCity(j));
+                            tour = newTour;
+                            bestDistance = newDistance;
+                            swaps++;
+                            improve++;
                         }
-
-                        bestDistance = newDistance;
                     }
                 }
             }
 
-            improve++;
+            iterations++;
+
         }
+
+        tour.addTourCity(-1);
+
+        return tour;
     }
 
-    private static void _2optSwap(int i, int k, Tour tour, Tour newTour)
+    private static Tour swap(Tour tour, int i, int j)
     {
-        int size = tour.getTour().size() - 1;
+        Tour newTour = new Tour();
+        newTour.setDistanceMatrix(tour.getDistanceMatrix());
+
+        int size = tour.getTour().size();
 
         for(int c = 0; c <= i - 1; c++)
         {
-            newTour.setTourCity(c, tour.getTourCity(c));
+            newTour.addTourCity(tour.getTourCity(c));
         }
 
         int dec = 0;
-
-        for(int c = i; c <= k; c++)
+        for(int c = i; c <= j; c++)
         {
-            newTour.setTourCity(c, tour.getTourCity( k - dec));
+            newTour.addTourCity(tour.getTourCity(j - dec));
             dec++;
         }
 
-        for(int c = k + 1; c < size; c++)
+        for(int c = j + 1; c < size; c++)
         {
-            newTour.setTourCity(c, tour.getTourCity(c));
+            newTour.addTourCity(tour.getTourCity(c));
         }
-    }
 
+        return newTour;
+    }
 
 
 

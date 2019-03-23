@@ -39,7 +39,7 @@ public class NearestNeighbor {
             neigh = -1;
             min = Integer.MAX_VALUE;
         }
-        System.out.println("Cost "+cost);
+        //System.out.println("Cost "+cost);
 
         for(int c : orderedCity)
             System.out.print(c + " -> ");
