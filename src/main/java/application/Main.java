@@ -37,9 +37,9 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
-       // String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
+        String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
 
-        String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\lin318.tsp";
+       // String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\lin318.tsp";
        // List<City> cities;
 
         Tour tour = new CityFileReader().read(path);
@@ -60,6 +60,7 @@ public class Main extends Application
         Tour old = tour;
         tour = _2opt._2opt(tour);
         System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+        //System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
 
         System.out.println("2opt");
 

@@ -140,6 +140,25 @@ public class Tour
         return tourCost;
     }
 
+    public int computeTourCostWithout1()
+    {
+        tourCost = 0;
+
+        try {
+            // System.out.println("Tour size : " + tour.size());
+            for (int i = 0; i < tour.size() - 1; i++)
+                tourCost += distanceMatrix[tour.get(i)][tour.get(i + 1)];
+
+            tourCost += distanceMatrix[tour.get(0)][tour.get(tour.size() - 1)];
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            //TODO: errore
+        }
+        return tourCost;
+    }
+
     public int getBestKnown() {
         return bestKnown;
     }
