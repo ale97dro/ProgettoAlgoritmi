@@ -1,6 +1,5 @@
 package application;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class _2opt
@@ -36,77 +35,144 @@ public class _2opt
 //        }
 //    }
 
-    public static List<Integer> runWiki(Tour tour, int[][] distances)
+    //QUESTA VERSIONE DA ERRORE SULLA MATRICE DELLE DISTANZE
+//    public static List<Integer> runWiki(Tour tour, int[][] distances)
+//    {
+//        //List<Integer> cities = tour.getTour();
+//        int size = tour.getTour().size();
+//        int bestDistance = 1;
+//        boolean _break = false;
+//
+//        while(bestDistance != 0)
+//        {
+//            _break = false;
+//            bestDistance = tour.computeTourCost();
+//
+//            for(int i = 0; i < size -1; i++)
+//            {
+//                for(int c = i + 1; c < size; c++)
+//                {
+//                    Tour newTour = _2optSwap(tour, i, c);
+//
+//                   // Tour newTour = new Tour();
+//                    //newTour.setTour(newRoute);
+//
+//                    int newDistance = newTour.computeTourCost();
+//
+//                    if(newDistance < bestDistance)
+//                    {
+//                        //cities = newRoute;
+//                        tour = newTour;
+//                        bestDistance = newDistance;
+//                        _break = true;
+//                        break;
+//                    }
+//                }
+//
+//                if(_break)
+//                    break;
+//            }
+//        }
+//
+//        return tour.getTour();
+//    }
+//
+//    private static Tour _2optSwap(Tour tour, int i, int k)
+//    {
+//        //List<Integer> newTour = new ArrayList<>();
+//
+//        //TourMigliore tour = new TourMigliore(citites);
+//       // TourMigliore newTour = new TourMigliore();
+//
+//        Tour newTour = new Tour(tour.getDistances());
+//
+//        int size = tour.getTour().size();
+//
+//        for(int c = 0; c <= i - 1; c++)
+//            newTour.setTourCity(c, tour.getTourCity(c));
+//
+//        int dec = 0;
+//        System.out.println(dec);
+//        for(int c = i; c<= k; c++)
+//        {
+//            newTour.setTourCity(c, tour.getTourCity(k-dec));
+//            dec++;
+//        }
+//
+//        for(int c = k+1; c < size; c++)
+//            newTour.setTourCity(c, tour.getTourCity(c));
+//
+//
+//        return newTour;
+//    }
+
+    public static void run(Tour tour)
     {
-        List<Integer> cities = tour.getOrderedCity();
+        int size = tour.getTour().size() - 1;
 
-        int bestDistance = 1;
-        boolean _break = false;
+        Tour newTour = new Tour();
 
-        while(bestDistance != 0)
+        for(int i = 0; i < size; i++)
+            newTour.setTourCity(i, tour.getTourCity(i));
+
+        int improve = 0;
+        int iteration = 0;
+
+        while(improve < 800)
         {
-            _break = false;
-            bestDistance = tour.computeTourCost();
+            int bestDistance = tour.computeTourCost();
 
-            for(int i = 0; i < cities.size() -1; i++)
+            for(int i = 1; i < size - 1; i++)
             {
-                for(int c = i + 1; c < cities.size(); c++)
+                for(int k = i + 1; k < size; k++)
                 {
-                    List<Integer> newRoute = _2optSwap(cities, i, c);
-
-                    Tour newTour = new Tour(null);
-                    newTour.setOrderedCity(newRoute);
-
+                    _2optSwap(i, k, tour, newTour);
+                    iteration++;
                     int newDistance = newTour.computeTourCost();
 
                     if(newDistance < bestDistance)
                     {
-                        cities = newRoute;
-                        tour = newTour;
+                        improve = 0;
+
+                        for(int j = 0; j < size; j++)
+                        {
+                            tour.setTourCity(j, newTour.getTourCity(j));
+                        }
+
                         bestDistance = newDistance;
-                        _break = true;
-                        break;
                     }
                 }
-
-                if(_break)
-                    break;
             }
-        }
 
-        return tour.getOrderedCity();
+            improve++;
+        }
     }
 
-    private static List<Integer> _2optSwap(List<Integer> citites, int i, int k)
+    private static void _2optSwap(int i, int k, Tour tour, Tour newTour)
     {
-        //List<Integer> newTour = new ArrayList<>();
-
-        TourMigliore tour = new TourMigliore(citites);
-        TourMigliore newTour = new TourMigliore();
-
-        int size = citites.size();
+        int size = tour.getTour().size() - 1;
 
         for(int c = 0; c <= i - 1; c++)
-            newTour.setCity(c, tour.getCity(c));
+        {
+            newTour.setTourCity(c, tour.getTourCity(c));
+        }
 
         int dec = 0;
-        System.out.println(dec);
-        for(int c = i; c<= k; c++)
+
+        for(int c = i; c <= k; c++)
         {
-            newTour.setCity(c, tour.getCity(k-dec));
+            newTour.setTourCity(c, tour.getTourCity( k - dec));
             dec++;
         }
 
-        for(int c = k+1; c < size; c++)
-            newTour.setCity(c, tour.getCity(c));
-
-
-        return newTour.getAllCities();
+        for(int c = k + 1; c < size; c++)
+        {
+            newTour.setTourCity(c, tour.getTourCity(c));
+        }
     }
 
 
-    public static void runGitHub(Tour tour)
-    {
-        Tour
-    }
+
+
+
 }

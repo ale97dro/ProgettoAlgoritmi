@@ -28,6 +28,11 @@ public class Main extends Application
         }
     }
 
+    public static double calcoloErrore(int tourCost, int bestKnown)
+    {
+        return ((tourCost - bestKnown) / bestKnown);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception
     {
@@ -48,8 +53,8 @@ public class Main extends Application
         //  printMatrix(distances);
 
 
-        tour.setOrderedCity(NearestNeighbor.run(cities, distances));
-        tour.setOrderedCity(_2opt.runWiki(tour, distances));
+        tour.setTour(NearestNeighbor.run(cities, distances));
+        //tour.setTour(_2opt.runWiki(tour, distances));
 
 
         Group root = new Group();
