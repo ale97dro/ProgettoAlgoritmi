@@ -178,6 +178,14 @@ public class Tour
     public int distanceBetweenCities(int a, int b)
     {
         return distanceMatrix[a][b];
+
+//        try {
+//            return distanceMatrix[a - 1][b - 1];
+//        }
+//        catch (Exception ex)
+//        {
+//            return 0;
+//        }
     }
 
     //Per disegnare

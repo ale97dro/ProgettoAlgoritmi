@@ -39,6 +39,7 @@ public class Main extends Application
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
         String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
 
+       // String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\fl1577.tsp";
        // String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\lin318.tsp";
        // List<City> cities;
 

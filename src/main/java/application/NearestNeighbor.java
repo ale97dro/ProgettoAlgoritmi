@@ -13,9 +13,9 @@ public class NearestNeighbor {
         int column = 0;
         int neigh = -1; //numero del nodo più vicino
         int start = 0;
-        start = 0;
         int cost = 0;
 
+        //orderedCity.add(0);
         orderedCity.add(0);
 
         for(int k = 0; k < distances.length; k++)
@@ -33,7 +33,10 @@ public class NearestNeighbor {
             if(min != Integer.MAX_VALUE)
                 cost+=min;
             start = neigh;
+
             orderedCity.add(neigh);
+            //orderedCity.add(neigh+1);
+
            // System.out.println(min);
             column = 0;
             neigh = -1;
