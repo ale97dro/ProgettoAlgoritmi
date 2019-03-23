@@ -40,12 +40,12 @@ public class Main extends Application
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
         String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
 
-        List<City> cities;
+       // List<City> cities;
 
-        cities = new CityFileReader().read(path);
+        Tour tour = new CityFileReader().read(path);
 
 
-        Tour tour = new Tour(cities);
+        //= new Tour(cities);
         tour.calcuateDistances(new EuclideanDistance());
 
         int[][] distances = tour.getDistances();
@@ -53,7 +53,7 @@ public class Main extends Application
         //  printMatrix(distances);
 
 
-        tour.setTour(NearestNeighbor.run(cities, distances));
+        tour.setTour(NearestNeighbor.run(tour.getCities(), distances));
         //tour.setTour(_2opt.runWiki(tour, distances));
 
 

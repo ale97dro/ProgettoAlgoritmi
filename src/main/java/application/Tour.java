@@ -104,6 +104,14 @@ public class Tour
         }
     }
 
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
     /**
      * Calcola il costo del tour
      * @return

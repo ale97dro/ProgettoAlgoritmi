@@ -7,7 +7,7 @@ import java.util.List;
 public class CityFileReader implements CityReader
 {
     @Override
-    public List<City> read(String path)
+    public Tour read(String path)
     {
         List<City> cities = new ArrayList<>();
 
@@ -27,7 +27,9 @@ public class CityFileReader implements CityReader
                 }
             }
 
-            return cities;
+            return new Tour(cities);
+
+           // return cities;
         }
         catch (IOException e)
         {
