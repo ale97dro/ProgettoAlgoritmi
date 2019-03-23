@@ -60,15 +60,13 @@ public class Main extends Application
 
         Tour old = tour;
         tour = _2opt._2opt(tour);
-        System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
-        //System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+        System.out.println("2opt error: " + calcoloErrore(tour.computeTourCostWithout1(), tour.getBestKnown()));
 
-        System.out.println("2opt");
+        //System.out.println("2opt");
 
         for(int i: tour.getTour())
             System.out.print(i + " -> ");
 
-       // tour = _2opt.run(tour);
 
 
 

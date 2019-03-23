@@ -13,10 +13,10 @@ public class NearestNeighbor {
         int column = 0;
         int neigh = -1; //numero del nodo più vicino
         int start = 0;
-        int cost = 0;
+       // int cost = 0;
 
         //orderedCity.add(0);
-        orderedCity.add(0);
+        orderedCity.add(1);
 
         for(int k = 0; k < distances.length; k++)
         {
@@ -30,8 +30,9 @@ public class NearestNeighbor {
                 column++;
             }
 
-            if(min != Integer.MAX_VALUE)
-                cost+=min;
+//            if(min != Integer.MAX_VALUE)
+//                cost+=min;
+
             start = neigh;
 
             orderedCity.add(neigh);

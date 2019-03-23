@@ -181,12 +181,13 @@ public class _2opt
         Tour tour = new Tour();
         //tour.setCities(oldTour.getCities());
         //tour.setBestKnown(oldTour.getBestKnown());
-        tour.setDistanceMatrix(oldTour.getDistanceMatrix());
+
 
 
         for(int i : oldTour.getTour())
             tour.addTourCity(i);
         tour.getTour().remove(tour.getTour().size()-1);
+        tour.setDistanceMatrix(oldTour.getDistanceMatrix());
 
         //tour.getTour()
 
@@ -198,9 +199,6 @@ public class _2opt
         int bestDistance = tour.computeTourCostWithout1();
         int newDistance;
         int swaps = 1;
-        //int improve = 0;
-        //int iterations = 0;
-        //long comparisions = 0;
 
         int size = tour.getTour().size();
 
@@ -208,12 +206,10 @@ public class _2opt
         {
             swaps = 0;
 
-            for(int i = 1; i < size - 2; i++)
+            for(int i = 1; i < tour.getTour().size() - 2; i++) //-2
             {
-                for(int j = i + 1; j < size - 1; j++)
+                for(int j = i + 1; j < tour.getTour().size() -1; j++) //-1
                 {
-                    //comparisions++;
-
                     if((tour.distanceBetweenCities(tour.getTourCity(i), tour.getTourCity(i-1)) + tour.distanceBetweenCities(tour.getTourCity(j+1), tour.getTourCity(j))) >=
                             (tour.distanceBetweenCities(tour.getTourCity(i), tour.getTourCity(j+1)) + tour.distanceBetweenCities(tour.getTourCity(i-1), tour.getTourCity(j))))
                     {
@@ -227,18 +223,14 @@ public class _2opt
                             tour = newTour;
                             bestDistance = newDistance;
                             swaps++;
-                            //improve++;
                         }
                     }
                 }
             }
-
-            //iterations++;
-
         }
 
-        tour.addTourCity(-1);
-        tour.computeTourCost();
+        //tour.addTourCity(-1);
+        tour.computeTourCostWithout1();
         tour.setCities(oldTour.getCities());
         tour.setBestKnown(oldTour.getBestKnown());
         return tour;
