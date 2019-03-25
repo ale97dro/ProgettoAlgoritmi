@@ -177,8 +177,17 @@ public class Tour
 
     public int distanceBetweenCities(int a, int b)
     {
-        return distanceMatrix[a][b];
+        a = a%131;
+        b = b%131;
 
+        try {
+            return distanceMatrix[a][b];
+        }
+        catch (Exception ex)
+        {
+            System.out.println("ciao");
+            return 0;
+        }
 //        try {
 //            return distanceMatrix[a - 1][b - 1];
 //        }
