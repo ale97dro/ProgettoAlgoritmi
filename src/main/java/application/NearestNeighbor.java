@@ -16,7 +16,7 @@ public class NearestNeighbor {
        // int cost = 0;
 
         //orderedCity.add(0);
-        orderedCity.add(1);
+        orderedCity.add(0);
 
         for(int k = 0; k < distances.length; k++)
         {

@@ -200,6 +200,10 @@ public class _2opt
         int newDistance;
         int swaps = 1;
 
+        int oldBestDistance = bestDistance;
+        int old_i, old_j;
+        old_i = old_j = 0;
+
         int size = tour.getTour().size();
 
         while(swaps != 0)
@@ -214,18 +218,27 @@ public class _2opt
                             (tour.distanceBetweenCities(tour.getTourCity(i), tour.getTourCity(j+1)) + tour.distanceBetweenCities(tour.getTourCity(i-1), tour.getTourCity(j))))
                     {
                         newTour = swap(tour, i, j);
-
-                        //newDistance = newTour.computeTourCost();
                         newDistance = newTour.computeTourCostWithout1();
 
                         if(newDistance < bestDistance)
                         {
-                            tour = newTour;
+                            old_i = i;
+                            old_j = j;
+                            //tour = newTour;
                             bestDistance = newDistance;
-                            swaps++;
+                           // swaps++;git
                         }
                     }
                 }
+            }
+
+            if(bestDistance < oldBestDistance)
+            {
+                tour = swap(tour, old_i, old_j);
+                tour.setBestKnown(oldTour.getBestKnown());
+                System.out.println(calcoloErrore(tour.computeTourCostWithout1(), tour.getBestKnown()));
+                swaps++;
+                oldBestDistance = bestDistance; //Todo: controllare questo
             }
         }
 
@@ -234,6 +247,12 @@ public class _2opt
         tour.setCities(oldTour.getCities());
         tour.setBestKnown(oldTour.getBestKnown());
         return tour;
+    }
+
+
+    public static double calcoloErrore(int tourCost, int bestKnown)
+    {
+        return ((tourCost - bestKnown) / (double)bestKnown) * 100;
     }
 
     private static Tour swap(Tour tour, int i, int j)
