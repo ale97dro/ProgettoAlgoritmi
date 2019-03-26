@@ -177,8 +177,8 @@ public class Tour
 
     public int distanceBetweenCities(int a, int b)
     {
-        a = a%131;
-        b = b%131;
+       // a = a%131;
+        //b = b%131;
 
         try {
             return distanceMatrix[a][b];
