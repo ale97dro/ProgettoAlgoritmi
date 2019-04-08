@@ -38,6 +38,7 @@ public class Main extends Application
     {
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
         String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
+        //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\eil76.tsp";
 
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\fl1577.tsp";
        // String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\lin318.tsp";
@@ -75,7 +76,8 @@ public class Main extends Application
         primaryStage.setTitle("OK");
         primaryStage.setScene(new Scene(root, 1000, 800));
 
-        root.getChildren().add(tour.getVisualTour());
+//        root.getChildren().add(tour.getVisualTour());
+        root.getChildren().add(tour.betterDraw());
 
 
         System.out.println("\nCosto tour calcolato: " + tour.computeTourCost());

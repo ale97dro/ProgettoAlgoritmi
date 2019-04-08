@@ -1,7 +1,14 @@
 package application;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -222,6 +229,48 @@ public class Tour
             //se voglio cambiare il colore, faccio new Circle qui dentro e lo aggiungo
             tourVisual.getChildren().add(new Circle((float) cities.get(tour.get(i)).getX(), (float) cities.get(tour.get(i)).getY(), 3));
         }
+        return tourVisual;
+    }
+
+
+    public Group betterDraw()
+    {
+        Group tourVisual = new Group();
+
+        LineChart<Number, Number> chart;
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("x");
+        yAxis.setLabel("y");
+        chart = new LineChart<>(xAxis, yAxis);
+        tourVisual.getChildren().add(chart);
+
+        XYChart.Series serie = new XYChart.Series();
+        chart.getData().add(serie);
+
+        for (int i = 0; i < tour.size(); i++) {
+            XYChart.Data<Number, Number> element = new XYChart.Data<>(cities.get(tour.get(i)).getX(), cities.get(tour.get(i)).getY());
+
+            StackPane node = new StackPane();
+            Label label = new Label((i+1) + "");    //order in which are displayed cities
+            if(i == tour.size()-1)
+                label = new Label(1 + "");
+            //label = new Label(tour.get(i)+""); //city name
+            Group group = new Group(label);
+            StackPane.setAlignment(group, Pos.BOTTOM_CENTER);
+            StackPane.setMargin(group, new Insets(0, 0, 5, 0));
+            node.getChildren().add(group);
+            element.setNode(node);
+
+
+            serie.getData().add(element);
+
+            //element.getNode().setStyle(("-fx-fill: rgba(255, 255, 255 , 0.15)"));
+        }
+
+        chart.setPrefSize(1920, 1080);
+        chart.setAxisSortingPolicy(LineChart.SortingPolicy.NONE);
+
         return tourVisual;
     }
 
