@@ -52,6 +52,11 @@ public class ACO
         }
 
 
+        //Muovo le formiche
+        //Calcolo percorso migliore
+        //Aggiorno il feromone
+
+
         return null;
     }
 }
