@@ -6,6 +6,11 @@ public class Ant
     private int[] tour; //ant tour
     private int cityNumber;
 
+    /**
+     *
+     * @param tourSize
+     * @param initialCity first city the ant visit
+     */
     public Ant(int tourSize, int initialCity)
     {
         this.cityNumber = 0;

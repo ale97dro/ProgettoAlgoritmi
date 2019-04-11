@@ -6,6 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+
+/*
+    PSEUDOCODE
+
+    LOOP
+        posiziona casualmente le formiche sulle città
+
+        FOR ALL città DO
+            FOR ALL formica do
+                IF exploitation THEN
+                    vai nella città megliore non ancora visitata
+                ELSE
+                    scegli la prossima città in modo probabilistico
+                END IF
+                aggiungi la città al tour
+                aggiorna localmente il feromone
+            END FOR
+            calcola la lunghezza del tour generato
+        END FOR
+        aggiorna globalmente il feromone
+    END LOOP
+
+
+
+
+ */
 public class ACO
 {
     private static final int ANTS_NUMBER = 10;
@@ -13,9 +40,10 @@ public class ACO
     private double alpha = 1;
     private double beta = 5.0;
     private double evaporation = 0.5;
-    private double Q0 = 0.95;
+    private double Q0 = 0.95; //probabilità di scegliere tra exploration e exploitation
     private double antFactor = 0.8; //bho
 
+    private int currentIndex = 0;
 
     private int[][] distanceMatrix;
     private double[][] pheromoneMatrix;
@@ -34,7 +62,7 @@ public class ACO
         int tourSize = oldTour.getTour().size(); //Number of cities
 
         distanceMatrix = oldTour.getDistanceMatrix();
-        pheromoneMatrix = new double[oldTour.getTour().size()][tourSize];
+        pheromoneMatrix = new double[tourSize][tourSize];
 
         //Set the initial pheromone
         double startPheromone = 1.0/(oldTour.computeTourCost() * tourSize);
@@ -52,11 +80,41 @@ public class ACO
         }
 
 
+        //Muovo le formiche sul percorso
+
+        for(int c = currentIndex; c < tourSize; c++) //add all cities to the tour
+        {
+            for (int i = 0; i < ANTS_NUMBER; i++) //add cities for all ants
+            {
+                String scelta = exploitationOrExploration();
+
+
+                if (scelta == "Exploitation")
+                {
+
+                }
+                else //Exploration
+                {
+
+                }
+
+
+                updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
+
+            }
+
+
+        }
+
+
         //Muovo le formiche
         //Calcolo percorso migliore
         //Aggiorno il feromone
 
 
-        return null;
+        Tour newTour = new Tour();
+        return newTour;
     }
+
+
 }
