@@ -37,15 +37,30 @@ public class Ant
      */
     public boolean visitCity(int city)
     {
-        if(visitedCity[city])
-            return false;
+        if(city != -1)
+        {
+            if (visitedCity[city])
+                return false;
 
-        visitedCity[city] = true;
-        tour.addTourCity(city);
-        //tour[cityNumber] = city;
-        ++cityNumber;
+            visitedCity[city] = true;
+            tour.addTourCity(city);
+            //tour[cityNumber] = city;
+            ++cityNumber;
 
-        return true;
+            return true;
+        }
+        else
+        {
+            tour.addTourCity(-1);
+            return true;
+        }
+
+
+    }
+
+    public void addTourTerminator()
+    {
+        tour.addTourCity(-1);
     }
 
     public int lastVisited()

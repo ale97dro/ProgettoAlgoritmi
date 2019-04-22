@@ -1,8 +1,10 @@
 package aco;
 
 import application.Tour;
+import application._2opt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -46,7 +48,7 @@ public class ACO
     private double antFactor = 0.8; //bho
     private double exploitation = 0.95; //possibilità di scegliere exploitation
 
-    private Random randomGenerator;
+    private Random randomGenerator = new Random(10_000_000);
 
     private int currentIndex = 0;
 
@@ -65,15 +67,20 @@ public class ACO
     //Corrisponde per ora ad una sola iterazione
     public Tour antColony(Tour oldTour)
     {
+        int bestTour = Integer.MAX_VALUE;
+        Ant bestAnt = null;
+
         for(int iteration = 0; iteration < iterationNumber; iteration++)
         {
-            int tourSize = oldTour.getTour().size(); //Number of cities
+            this.ants = new ArrayList<>();
+            //int tourSize = oldTour.getTour().size(); //Number of cities
+            int tourSize = oldTour.getCities().size();
 
             distanceMatrix = oldTour.getDistanceMatrix();
             pheromoneMatrix = new double[tourSize][tourSize];
 
             //Set the initial pheromone
-            double startPheromone = 1.0 / (oldTour.computeTourCost() * tourSize);
+            double startPheromone = 1.0 / (oldTour.getTourCost() * tourSize);
             for (int r = 0; r < tourSize; r++)
                 for (int c = 0; c < tourSize; c++)
                     pheromoneMatrix[r][c] = startPheromone;
@@ -89,22 +96,38 @@ public class ACO
             currentIndex++; //number of visited city
 
             //Muovo le formiche sul percorso
-            for (int c = currentIndex; c < tourSize; c++) //add all cities to the tour
+            for (int c = 0; c < tourSize; c++) //add all cities to the tour
             {
                 //for (int i = 0; i < ANTS_NUMBER; i++) //add cities for all ants
-                for (Ant a : ants) {
+                for (Ant a : ants)
+                {
                     int nextCity = nextCity(a);
                     a.visitCity(nextCity);
 
-
                     //updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
-
                 }
-
-
             }
 
-            //2OPT
+            //2OPT (deve finire con -1 il tour che gli passo)
+            for(Ant a : ants)
+            {
+                a.getAntTour().setBestKnown(oldTour.getBestKnown());
+                a.getAntTour().setDistanceMatrix(oldTour.getDistanceMatrix());
+                //a.addTourTerminator();
+
+                a.setAntTour(_2opt._2opt(a.getAntTour()));
+                a.getAntTour().computeTourCost();
+
+                if(a.getAntTour().getTourCost() < bestTour)
+                {
+                    bestTour = a.getAntTour().getTourCost();
+                    bestAnt = a;
+                }
+            }
+
+
+
+
 
             //SCELGO IL MIGLIORE
 
@@ -113,9 +136,7 @@ public class ACO
             //RIESEGUO TUTTO IL PROCESSO
         }
 
-
-        Tour newTour = new Tour();
-        return newTour;
+        return bestAnt.getAntTour();
     }
 
     private int nextCity(Ant ant)
@@ -127,19 +148,21 @@ public class ACO
         double maxProbability = Double.MIN_VALUE;
         int designedCity = -1;
 
-        if(rand > exploitation)
+        if(rand < exploitation)
         {
             //fermone/costo
             for(int i = 0; i < size; i++) //scorro le città
             {
                 if(!visitedCity[i]) //se la città non è visitata, posso calcolare i parametri che mi servono
                 {
-                    probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i];
-
-                    if(probability > maxProbability)
+                    if(ant.lastVisited() != i)
                     {
-                        maxProbability = probability;
-                        designedCity = i; //the next city to visit
+                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i];
+
+                        if (probability > maxProbability) {
+                            maxProbability = probability;
+                            designedCity = i; //the next city to visit
+                        }
                     }
                 }
             }
@@ -147,30 +170,51 @@ public class ACO
         else //Formula: (fermone/costo)/ somma_di_fermone/costo per tutti gli archi
         {
             double totalCostPhermone = 0;
-            List<Double> probabilities = new ArrayList<>(size); //all probabilities
+            //List<Double> probabilities = new ArrayList<>(size); //all probabilities NO: PERDO IL NOME DELLA CITTA'
+            HashMap<Integer, Double> probabilities = new HashMap<>();
+
 
             for(int i = 0; i < size; i++) {
                 if (!visitedCity[i]) {
-                    probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i];
-                    totalCostPhermone += probability;
-                    probabilities.add(probability);
-                }
-            }
-
-            //probability = 0;
-            for(int i = 0; i < size; i++)
-            {
-                if(!visitedCity[i])
-                {
-                    if((probabilities.get(i)/totalCostPhermone) > maxProbability)
+                    if(ant.lastVisited() != i)
                     {
-                        maxProbability = probabilities.get(i);
-                        designedCity = i;
+                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i];
+                        totalCostPhermone += probability;
+                        probabilities.put(i, probability);
+                        //probabilities.add(probability);
                     }
                 }
             }
 
+            //size = probabilities.keySet().size(); //update size
+
+            for(Integer k : probabilities.keySet())
+            {
+                if(!visitedCity[k])
+                {
+                    if((probabilities.get(k)/totalCostPhermone) > maxProbability)
+                    {
+                        maxProbability = probabilities.get(k);
+                        designedCity = k;
+                    }
+                }
+            }
+
+
+//            for(int i = 0; i < size; i++)
+//            {
+//                if(!visitedCity[i])
+//                {
+//                    if((probabilities.get(i)./totalCostPhermone) > maxProbability)
+//                    {
+//                        maxProbability = probabilities.get(i);
+//                        designedCity = probabilities.;
+//                    }
+//                }
+//            }
+
         }
+
 
         return designedCity;
     }

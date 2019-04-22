@@ -1,5 +1,6 @@
 package application;
 
+import aco.ACO;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -37,7 +38,8 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
-        String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
+        //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
+        String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\ch130.tsp";
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\eil76.tsp";
 
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\fl1577.tsp";
@@ -57,7 +59,10 @@ public class Main extends Application
 
         tour.setTour(NearestNeighbor.run(tour.getCities(), distances));
 
+
+
         System.out.println("\nNN error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+        int nnCost = tour.getTourCost();
 
         Tour old = tour;
         tour = _2opt._2opt(tour);
@@ -69,18 +74,28 @@ public class Main extends Application
             System.out.print(i + " -> ");
 
 
+        //ANT COLONY TEST
+
+        ACO aco = new ACO();
 
 
+        tour = new CityFileReader().read(path);
+        tour.calcuateDistances(new EuclideanDistance());
+        tour.setTourCost(nnCost);
+
+        Tour acoTour = aco.antColony(tour);
+        acoTour.setCities(tour.getCities());
 
         Group root = new Group();
         primaryStage.setTitle("OK");
         primaryStage.setScene(new Scene(root, 1000, 800));
 
 //        root.getChildren().add(tour.getVisualTour());
-        root.getChildren().add(tour.betterDraw());
+        root.getChildren().add(acoTour.betterDraw());
+        //root.getChildren().add(tour.betterDraw());
 
 
-        System.out.println("\nCosto tour calcolato: " + tour.computeTourCost());
+        //System.out.println("\nCosto tour calcolato: " + tour.computeTourCost());
 
         primaryStage.show();
     }
