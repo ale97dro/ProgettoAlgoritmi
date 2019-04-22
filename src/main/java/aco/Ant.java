@@ -41,4 +41,14 @@ public class Ant
 
         return true;
     }
+
+    public int lastVisited()
+    {
+        return tour[cityNumber-1];
+    }
+
+    public boolean[] getVisitedCity()
+    {
+        return visitedCity;
+    }
 }
