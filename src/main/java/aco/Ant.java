@@ -1,9 +1,12 @@
 package aco;
 
+import application.Tour;
+
 public class Ant
 {
     private boolean[] visitedCity; //tell you if the city is just visited
-    private int[] tour; //ant tour
+    //private int[] tour; //ant tour
+    private Tour tour;
     private int cityNumber;
 
     /**
@@ -15,13 +18,15 @@ public class Ant
     {
         this.cityNumber = 0;
         this.visitedCity = new boolean[tourSize];
-        this.tour = new int[tourSize];
+        //this.tour = new int[tourSize];
+        this.tour = new Tour();
 
         for(boolean c : visitedCity)
             c = false;
 
         this.visitedCity[initialCity] = true;
-        this.tour[cityNumber] = initialCity;
+        this.tour.addTourCity(initialCity);
+        //this.tour[cityNumber] = initialCity;
         ++this.cityNumber;
     }
 
@@ -36,7 +41,8 @@ public class Ant
             return false;
 
         visitedCity[city] = true;
-        tour[cityNumber] = city;
+        tour.addTourCity(city);
+        //tour[cityNumber] = city;
         ++cityNumber;
 
         return true;
@@ -44,11 +50,21 @@ public class Ant
 
     public int lastVisited()
     {
-        return tour[cityNumber-1];
+        return tour.getTourCity(cityNumber-1);
     }
 
     public boolean[] getVisitedCity()
     {
         return visitedCity;
+    }
+
+    public Tour getAntTour()
+    {
+        return tour;
+    }
+
+    public void setAntTour(Tour tour)
+    {
+        this.tour = tour;
     }
 }

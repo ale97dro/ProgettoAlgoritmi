@@ -97,7 +97,7 @@ public class ACO
                     a.visitCity(nextCity);
 
 
-                    updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
+                    //updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
 
                 }
 
@@ -127,7 +127,7 @@ public class ACO
         double maxProbability = Double.MIN_VALUE;
         int designedCity = -1;
 
-        if(rand < exploitation)
+        if(rand > exploitation)
         {
             //fermone/costo
             for(int i = 0; i < size; i++) //scorro le città
