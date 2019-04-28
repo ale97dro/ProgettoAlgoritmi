@@ -51,7 +51,8 @@ public class Ant
         }
         else
         {
-            tour.addTourCity(-1);
+            //TODO: questa parte non va bene
+            //tour.addTourCity(-1);
             return true;
         }
 
@@ -66,6 +67,11 @@ public class Ant
     public int lastVisited()
     {
         return tour.getTourCity(cityNumber-1);
+    }
+
+    public int penultimateVisited()
+    {
+        return tour.getTourCity(cityNumber-2);
     }
 
     public boolean[] getVisitedCity()

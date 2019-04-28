@@ -37,16 +37,17 @@ import java.util.Random;
  */
 public class ACO
 {
-    private static final int ANTS_NUMBER = 10;
-    private int iterationNumber = 10;
+    private static final int ANTS_NUMBER = 6;
+    private int iterationNumber = 300; //195 iterazioni e il 76 va a 0
 
     private double c = 1.0;
-    private double alpha = 1;
+    private double alpha = 0.1;
     private double beta = 5.0;
     private double evaporation = 0.5;
     private double Q0 = 0.95; //probabilità di scegliere tra exploration e exploitation
     private double antFactor = 0.8; //bho
     private double exploitation = 0.95; //possibilità di scegliere exploitation
+    private double t0; //initial pheromone
 
     private Random randomGenerator = new Random(10_000_000);
 
@@ -81,6 +82,7 @@ public class ACO
 
             //Set the initial pheromone
             double startPheromone = 1.0 / (oldTour.getTourCost() * tourSize);
+            //t0 = startPheromone;
             for (int r = 0; r < tourSize; r++)
                 for (int c = 0; c < tourSize; c++)
                     pheromoneMatrix[r][c] = startPheromone;
@@ -105,8 +107,15 @@ public class ACO
                     a.visitCity(nextCity);
 
                     //updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
+                    // 1 - alpha * costoArco + alpha * fermoneIniziale
+
+//                    pheromoneMatrix[a.lastVisited()][a.penultimateVisited()] += 1.0-alpha*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
+//                    pheromoneMatrix[a.penultimateVisited()][a.lastVisited()] += 1.0-alpha*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
                 }
             }
+
+            for(Ant a : ants)
+                a.addTourTerminator();
 
             //2OPT (deve finire con -1 il tour che gli passo)
             for(Ant a : ants)
@@ -122,9 +131,19 @@ public class ACO
                 {
                     bestTour = a.getAntTour().getTourCost();
                     bestAnt = a;
+
+
                 }
             }
 
+
+            //aggiorno fermone del percorso migliore
+
+            for(int i = 0; i < bestAnt.getAntTour().getTour().size() - 1; i++)
+            {
+                pheromoneMatrix[bestAnt.getAntTour().getTourCity(i)][bestAnt.getAntTour().getTourCity(i+1)] += 1.0/bestAnt.getAntTour().computeTourCost();
+                pheromoneMatrix[bestAnt.getAntTour().getTourCity(i+1)][bestAnt.getAntTour().getTourCity(i)] += 1.0/bestAnt.getAntTour().computeTourCost();
+            }
 
 
 
@@ -157,7 +176,8 @@ public class ACO
                 {
                     if(ant.lastVisited() != i)
                     {
-                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i];
+                        //probability = Math.pow(pheromoneMatrix[ant.lastVisited()][i], alpha) * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
+                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
 
                         if (probability > maxProbability) {
                             maxProbability = probability;
@@ -178,7 +198,7 @@ public class ACO
                 if (!visitedCity[i]) {
                     if(ant.lastVisited() != i)
                     {
-                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i];
+                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
                         totalCostPhermone += probability;
                         probabilities.put(i, probability);
                         //probabilities.add(probability);
