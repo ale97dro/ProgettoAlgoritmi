@@ -107,10 +107,10 @@ public class ACO
                     a.visitCity(nextCity);
 
                     //updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
-                    // 1 - alpha * costoArco + alpha * fermoneIniziale
+                    // (1 - alpha) * costoArco + alpha * fermoneIniziale
 
-//                    pheromoneMatrix[a.lastVisited()][a.penultimateVisited()] += 1.0-alpha*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
-//                    pheromoneMatrix[a.penultimateVisited()][a.lastVisited()] += 1.0-alpha*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
+//                    pheromoneMatrix[a.lastVisited()][a.penultimateVisited()] += (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
+//                    pheromoneMatrix[a.penultimateVisited()][a.lastVisited()] += (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
                 }
             }
 
@@ -199,14 +199,12 @@ public class ACO
                     if(ant.lastVisited() != i)
                     {
                         probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
+                        //probability = Math.pow(pheromoneMatrix[ant.lastVisited()][i], alpha) * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
                         totalCostPhermone += probability;
                         probabilities.put(i, probability);
-                        //probabilities.add(probability);
                     }
                 }
             }
-
-            //size = probabilities.keySet().size(); //update size
 
 
             //MIA VERSIONE
@@ -222,21 +220,7 @@ public class ACO
                 }
             }
 
-
-//            for(int i = 0; i < size; i++)
-//            {
-//                if(!visitedCity[i])
-//                {
-//                    if((probabilities.get(i)./totalCostPhermone) > maxProbability)
-//                    {
-//                        maxProbability = probabilities.get(i);
-//                        designedCity = probabilities.;
-//                    }
-//                }
-//            }
-
         }
-
 
         return designedCity;
     }
