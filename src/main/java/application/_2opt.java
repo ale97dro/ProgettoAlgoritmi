@@ -69,10 +69,10 @@ public class _2opt
                 tour = swap(tour, old_i, old_j);
                 tour.setBestKnown(oldTour.getBestKnown());
                 //System.out.println(calcoloErrore(tour.computeTourCostWithout1(), tour.getBestKnown()));
-                System.out.println(calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+                //System.out.println(calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
                 swaps = true;
                 oldBestDistance = bestDistance; //Todo: controllare questo
-                System.out.println(old_i + " "+ old_j);
+                //System.out.println(old_i + " "+ old_j);
             }
         }
 

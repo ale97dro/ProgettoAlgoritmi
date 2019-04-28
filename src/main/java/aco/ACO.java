@@ -208,6 +208,8 @@ public class ACO
 
             //size = probabilities.keySet().size(); //update size
 
+
+            //MIA VERSIONE
             for(Integer k : probabilities.keySet())
             {
                 if(!visitedCity[k])
