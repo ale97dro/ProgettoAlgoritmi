@@ -70,26 +70,26 @@ public class ACO
     {
         int bestTour = Integer.MAX_VALUE;
         Ant bestAnt = null;
+        Random rand = new Random(0);
+
+        int tourSize = oldTour.getCities().size();
+        pheromoneMatrix = new double[tourSize][tourSize];
+        distanceMatrix = oldTour.getDistanceMatrix();
+
+        //Set the initial pheromone
+        double startPheromone = 1.0 / (oldTour.getTourCost() * tourSize);
+        //t0 = startPheromone;
+        for (int r = 0; r < tourSize; r++)
+            for (int c = 0; c < tourSize; c++)
+                pheromoneMatrix[r][c] = startPheromone;
 
         for(int iteration = 0; iteration < iterationNumber; iteration++)
         {
             this.ants = new ArrayList<>();
             //int tourSize = oldTour.getTour().size(); //Number of cities
-            int tourSize = oldTour.getCities().size();
-
-            distanceMatrix = oldTour.getDistanceMatrix();
-            pheromoneMatrix = new double[tourSize][tourSize];
-
-            //Set the initial pheromone
-            double startPheromone = 1.0 / (oldTour.getTourCost() * tourSize);
-            //t0 = startPheromone;
-            for (int r = 0; r < tourSize; r++)
-                for (int c = 0; c < tourSize; c++)
-                    pheromoneMatrix[r][c] = startPheromone;
-
 
             //Distribute ants to cities
-            Random rand = new Random(0);
+
             for (int i = 0; i < ANTS_NUMBER; i++) {
                 Ant ant = new Ant(tourSize, rand.nextInt(tourSize));
                 ants.add(ant);
@@ -98,7 +98,7 @@ public class ACO
             currentIndex++; //number of visited city
 
             //Muovo le formiche sul percorso
-            for (int c = 0; c < tourSize; c++) //add all cities to the tour
+            for (int c =1; c < tourSize; c++) //add all cities to the tour
             {
                 //for (int i = 0; i < ANTS_NUMBER; i++) //add cities for all ants
                 for (Ant a : ants)
