@@ -37,16 +37,16 @@ import java.util.Random;
  */
 public class ACO
 {
-    private static final int ANTS_NUMBER = 6;
-    private int iterationNumber = 300; //195 iterazioni e il 76 va a 0
+    private static final int ANTS_NUMBER = 3;
+    private int iterationNumber = 800; //195 iterazioni e il 76 va a 0
 
     private double c = 1.0;
     private double alpha = 0.1;
-    private double beta = 5.0;
+    private double beta = 2.0;
     private double evaporation = 0.5;
     private double Q0 = 0.95; //probabilità di scegliere tra exploration e exploitation
     private double antFactor = 0.8; //bho
-    private double exploitation = 0.95; //possibilità di scegliere exploitation
+    private double exploitation = 0.9; //possibilità di scegliere exploitation
     private double t0; //initial pheromone
 
     private Random randomGenerator = new Random(10_000_000);
@@ -108,14 +108,15 @@ public class ACO
 
                     //updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
                     // (1 - alpha) * costoArco + alpha * fermoneIniziale
-
-//                    pheromoneMatrix[a.lastVisited()][a.penultimateVisited()] += (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
-//                    pheromoneMatrix[a.penultimateVisited()][a.lastVisited()] += (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
+                    int lastVisited = a.lastVisited();
+                    int penultimateVisited = a.penultimateVisited();
+                    pheromoneMatrix[lastVisited][penultimateVisited] = (1.0-alpha)*distanceMatrix[lastVisited][penultimateVisited] + alpha*startPheromone;
+                    pheromoneMatrix[penultimateVisited][lastVisited] = (1.0-alpha)*distanceMatrix[lastVisited][penultimateVisited] + alpha*startPheromone;
+//                    pheromoneMatrix[a.lastVisited()][a.penultimateVisited()] = (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
+//                    pheromoneMatrix[a.penultimateVisited()][a.lastVisited()] = (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
                 }
             }
 
-            for(Ant a : ants)
-                a.addTourTerminator();
 
             //2OPT (deve finire con -1 il tour che gli passo)
             for(Ant a : ants)
@@ -123,6 +124,7 @@ public class ACO
                 a.getAntTour().setBestKnown(oldTour.getBestKnown());
                 a.getAntTour().setDistanceMatrix(oldTour.getDistanceMatrix());
                 //a.addTourTerminator();
+                a.addTourTerminator();
 
                 a.setAntTour(_2opt._2opt(a.getAntTour()));
                 a.getAntTour().computeTourCost();
@@ -131,8 +133,6 @@ public class ACO
                 {
                     bestTour = a.getAntTour().getTourCost();
                     bestAnt = a;
-
-
                 }
             }
 
@@ -141,8 +141,8 @@ public class ACO
 
             for(int i = 0; i < bestAnt.getAntTour().getTour().size() - 1; i++)
             {
-                pheromoneMatrix[bestAnt.getAntTour().getTourCity(i)][bestAnt.getAntTour().getTourCity(i+1)] += 1.0/bestAnt.getAntTour().computeTourCost();
-                pheromoneMatrix[bestAnt.getAntTour().getTourCity(i+1)][bestAnt.getAntTour().getTourCity(i)] += 1.0/bestAnt.getAntTour().computeTourCost();
+                pheromoneMatrix[bestAnt.getAntTour().getTourCity(i)][bestAnt.getAntTour().getTourCity(i+1)] = (1.0-alpha) * pheromoneMatrix[bestAnt.getAntTour().getTourCity(i)][bestAnt.getAntTour().getTourCity(i+1)] + alpha * 1.0/bestAnt.getAntTour().computeTourCost();
+                pheromoneMatrix[bestAnt.getAntTour().getTourCity(i+1)][bestAnt.getAntTour().getTourCity(i)] = (1.0-alpha) * pheromoneMatrix[bestAnt.getAntTour().getTourCity(i+1)][bestAnt.getAntTour().getTourCity(i)] + alpha * 1.0/bestAnt.getAntTour().computeTourCost();
             }
 
 
@@ -176,8 +176,9 @@ public class ACO
                 {
                     if(ant.lastVisited() != i)
                     {
-                        //probability = Math.pow(pheromoneMatrix[ant.lastVisited()][i], alpha) * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
-                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
+                        //questo si chiama score
+                        probability = pheromoneMatrix[ant.lastVisited()][i] * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
+                        //probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
 
                         if (probability > maxProbability) {
                             maxProbability = probability;
@@ -190,6 +191,8 @@ public class ACO
         else //Formula: (fermone/costo)/ somma_di_fermone/costo per tutti gli archi
         {
             double totalCostPhermone = 0;
+            double sum = 0;
+            double threshold = randomGenerator.nextDouble();
             //List<Double> probabilities = new ArrayList<>(size); //all probabilities NO: PERDO IL NOME DELLA CITTA'
             HashMap<Integer, Double> probabilities = new HashMap<>();
 
@@ -198,7 +201,8 @@ public class ACO
                 if (!visitedCity[i]) {
                     if(ant.lastVisited() != i)
                     {
-                        probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
+                        //probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
+                        probability = pheromoneMatrix[ant.lastVisited()][i] * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
                         //probability = Math.pow(pheromoneMatrix[ant.lastVisited()][i], alpha) * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
                         totalCostPhermone += probability;
                         probabilities.put(i, probability);
@@ -212,10 +216,11 @@ public class ACO
             {
                 if(!visitedCity[k])
                 {
-                    if((probabilities.get(k)/totalCostPhermone) > maxProbability)
+                    sum += probabilities.get(k)/totalCostPhermone;
+                    if( sum >= threshold)
                     {
-                        maxProbability = probabilities.get(k);
                         designedCity = k;
+                        break;
                     }
                 }
             }

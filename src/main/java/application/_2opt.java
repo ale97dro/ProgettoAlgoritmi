@@ -42,7 +42,7 @@ public class _2opt
         {
             swaps = false;
 
-            System.out.println(tour.getTour().size());
+           // System.out.println(tour.getTour().size());
             for(int i = 1; i < tour.getTour().size() -2; i++) //-2
             {
                 for(int j = i + 1 ; j < tour.getTour().size() - 1; j++) //-1

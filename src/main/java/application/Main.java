@@ -39,7 +39,8 @@ public class Main extends Application
     {
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
-        String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\ch130.tsp";
+        //String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\ch130.tsp";
+        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\ch130.tsp";
         //String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\eil76.tsp";
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\eil76.tsp";
 
