@@ -40,7 +40,8 @@ public class Main extends Application
         //String path = "D:\\alex2\\Desktop\\ALGO_cup_2019_problems\\fl1577.tsp";
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
         //String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\ch130.tsp";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\ch130.tsp";
+        //String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\ch130.tsp";
+       String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\pcb442.tsp";
         //String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\eil76.tsp";
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\eil76.tsp";
 
@@ -63,30 +64,37 @@ public class Main extends Application
 
 
 
+        tour.getTour().remove(tour.getTour().size()-1);
+        tour.addTourCity(tour.getTour().get(0));
         System.out.println("\nNN error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
         int nnCost = tour.getTourCost();
 
         Tour old = tour;
-        tour = _2opt._2opt(tour);
+        //tour = _2opt._2opt(tour);
 //        System.out.println("2opt error: " + calcoloErrore(tour.computeTourCostWithout1(), tour.getBestKnown()));
-        System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
+        //System.out.println("2opt error: " + calcoloErrore(tour.computeTourCost(), tour.getBestKnown()));
         //System.out.println("2opt");
 
-        for(int i: tour.getTour())
-            System.out.print(i + " -> ");
+//        for(int i: tour.getTour())
+//            System.out.print(i + " -> ");
 
 
         //ANT COLONY TEST
 
         ACO aco = new ACO();
 
-
+        long startTime = System.currentTimeMillis();
         tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
 
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("Tempo: " + (endTime-startTime));
+        System.out.println("Costo: " + acoTour.computeTourCost());
 
         Group root = new Group();
         primaryStage.setTitle("OK");
