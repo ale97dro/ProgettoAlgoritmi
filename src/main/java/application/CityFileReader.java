@@ -29,7 +29,7 @@ public class CityFileReader implements CityReader
                 if (!row.equals("EOF")) {
                    // System.out.println(row);
                     String[] informations = row.split(" ");
-                    cities.add(City.create(Integer.parseInt(informations[0]), Double.parseDouble(informations[1]), Double.parseDouble(informations[2])));
+                    cities.add(City.create(Integer.parseInt(informations[informations.length - 3]), Double.parseDouble(informations[informations.length -2 ]), Double.parseDouble(informations[informations.length -1])));
                 }
             }
 

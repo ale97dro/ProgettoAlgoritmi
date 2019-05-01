@@ -5,16 +5,16 @@ import java.util.List;
 public class _2opt
 {
 
-    public static void _2opt(Tour tour)
+    public static void _2opt(Tour tour, long startTime)
     {
         while(true)
         {
-            if(!trySwap(tour))
+            if(!trySwap(tour, startTime))
                 break;
         }
     }
 
-    private static boolean trySwap(Tour tour) {
+    private static boolean trySwap(Tour tour, long startTime) {
         int[][] distanceMatrix = tour.getDistanceMatrix();
         int size = tour.getTour().size();
         int gain;
@@ -25,6 +25,10 @@ public class _2opt
             for (int k = i; k < size - 1; k++) {
                 //gain = (a,d) + (b,c) - (c,d) - (a,b)
                 // a = i, b = k, c = k+1, d = i+1;
+
+                if(((System.currentTimeMillis() - startTime) / 1000) >= 175)
+                    return false;
+
                 int a = tour.getTour().get(i);
                 int b = tour.getTour().get(k);
                 int c = tour.getTour().get(k + 1);

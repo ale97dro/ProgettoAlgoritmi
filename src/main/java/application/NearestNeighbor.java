@@ -45,8 +45,8 @@ public class NearestNeighbor {
         }
         //System.out.println("Cost "+cost);
 
-        for(int c : orderedCity)
-            System.out.print(c + " -> ");
+//        for(int c : orderedCity)
+//            System.out.print(c + " -> ");
 
         return orderedCity;
     }

@@ -41,7 +41,7 @@ public class Main extends Application
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\ch130.tsp";
         //String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\ch130.tsp";
        // String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\ch130.tsp";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\kroA100.tsp";
+        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\u1060.tsp";
        //String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\pcb442.tsp";
         //String path = "C:\\Users\\alex2\\Desktop\\Repo Git\\ProgettoAlgoritmi\\problems\\eil76.tsp";
         //String path = "D:\\alex2\\Desktop\\Algortmi\\ALGO_cup_2019_problems\\eil76.tsp";
@@ -92,12 +92,14 @@ public class Main extends Application
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
+        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+
         long endTime = System.currentTimeMillis();
 
         System.out.println("Tempo: " + (endTime-startTime));
         System.out.println("Costo: " + acoTour.computeTourCost());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+
 
         Group root = new Group();
         primaryStage.setTitle("OK");

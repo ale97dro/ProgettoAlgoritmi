@@ -38,7 +38,7 @@ import java.util.Random;
 public class ACO
 {
     private static final int ANTS_NUMBER = 10;
-    private int iterationNumber = 300; //195 iterazioni e il 76 va a 0
+    private int iterationNumber = 1000; //195 iterazioni e il 76 va a 0
 
     private double c = 1.0;
     private double alpha = 0.1;
@@ -49,7 +49,11 @@ public class ACO
     private double exploitation = 0.9; //possibilità di scegliere exploitation
     private double t0; //initial pheromone
 
-    private Random randomGenerator = new Random(10_000_000);
+    private int seed1 = 10_000_000;
+    private int seed2 = 0;
+
+    private Random randomGenerator = new Random(seed1);
+    Random rand = new Random(seed2);
 
     private int currentIndex = 0;
 
@@ -62,11 +66,21 @@ public class ACO
         this.ants = new ArrayList<>();
     }
 
+    public ACO(double alpha, double beta, double exploitation, int seed1, int seed2, int iterationNumber)
+    {
+        this.alpha = alpha;
+        this.beta = beta;
+        this.exploitation = exploitation;
+        this.seed1 = seed1;
+        this.seed2 = seed2;
+        this.iterationNumber = iterationNumber;
+    }
+
     public Tour antColony(Tour oldTour)
     {
         int bestTour = Integer.MAX_VALUE;
         Ant bestAnt = null;
-        Random rand = new Random(0);
+
 
         int tourSize = oldTour.getCities().size();
         pheromoneMatrix = new double[tourSize][tourSize];
@@ -79,13 +93,15 @@ public class ACO
             for (int c = 0; c < tourSize; c++)
                 pheromoneMatrix[r][c] = startPheromone;
 
-        for(int iteration = 0; iteration < iterationNumber; iteration++)
+
+        long startTime = System.currentTimeMillis();
+
+        for(int iteration = 0; iteration < iterationNumber && (System.currentTimeMillis() - startTime) / 1000 < 175; iteration++)
         {
             this.ants = new ArrayList<>();
             //int tourSize = oldTour.getTour().size(); //Number of cities
 
             //Distribute ants to cities
-
             for (int i = 0; i < ANTS_NUMBER; i++) {
                 Ant ant = new Ant(tourSize, rand.nextInt(tourSize));
                 ants.add(ant);
@@ -94,7 +110,7 @@ public class ACO
             currentIndex++; //number of visited city
 
             //Muovo le formiche sul percorso
-            for (int c =0; c < tourSize - 1; c++) //add all cities to the tour
+            for (int c =0; c < tourSize - 1; c++) //add all cities to the tour for alla ants
             {
                 //for (int i = 0; i < ANTS_NUMBER; i++) //add cities for all ants
                 for (Ant a : ants)
@@ -132,7 +148,7 @@ public class ACO
                 //a.setAntTour(_2opt._2opt(a.getAntTour()));// MIA VERSIONE
 
 
-                _2opt._2opt(a.getAntTour()); //VERSIONE BRE
+                _2opt._2opt(a.getAntTour(), startTime); //VERSIONE BRE
 
                 //a.getAntTour().computeTourCost();
 
@@ -172,17 +188,13 @@ public class ACO
             {
                 if(!visitedCity[i]) //se la città non è visitata, posso calcolare i parametri che mi servono
                 {
-                   // if(ant.lastVisited() != i)
-                    //{
-                        //questo si chiama score
-                        probability = pheromoneMatrix[ant.lastVisited()][i] * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
-                        //probability = pheromoneMatrix[ant.lastVisited()][i] / distanceMatrix[ant.lastVisited()][i]/1.0;
+                    //questo si chiama score
+                    probability = pheromoneMatrix[ant.lastVisited()][i] * Math.pow(1.0 / distanceMatrix[ant.lastVisited()][i], beta);
 
-                        if (probability > maxProbability) {
-                            maxProbability = probability;
-                            designedCity = i; //the next city to visit
-                        }
-                    //}
+                    if (probability > maxProbability) {
+                        maxProbability = probability;
+                        designedCity = i; //the next city to visit
+                    }
                 }
             }
         }
@@ -226,7 +238,4 @@ public class ACO
 
         return designedCity;
     }
-
-
-
 }
