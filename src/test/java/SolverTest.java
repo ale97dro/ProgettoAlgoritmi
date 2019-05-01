@@ -11,6 +11,7 @@ public class SolverTest {
     {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "ch130";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\ch130.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -29,7 +30,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -44,6 +45,7 @@ public class SolverTest {
     public void d198() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "dl198";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\d198.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -62,7 +64,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -77,6 +79,7 @@ public class SolverTest {
     public void eil76() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "eil76";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\eil76.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -95,7 +98,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -110,6 +113,7 @@ public class SolverTest {
     public void fl1577() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "fl1577";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\fl1577.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -128,7 +132,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -143,6 +147,7 @@ public class SolverTest {
     public void kroA100() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "kroA100";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\kroA100.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -161,7 +166,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -176,6 +181,7 @@ public class SolverTest {
     public void lin318() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "lin318";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\lin318.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -194,7 +200,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -209,6 +215,7 @@ public class SolverTest {
     public void pcb442() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "pcb442";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\PCB442.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -227,7 +234,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -242,7 +249,8 @@ public class SolverTest {
     public void pr439() {
         long startTime = System.currentTimeMillis();
 
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\PR439.tsp";
+        String fileName = "pr439";
+        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\pr439.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -260,7 +268,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -275,6 +283,7 @@ public class SolverTest {
     public void rat783() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "rat783";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\RAT783.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -293,7 +302,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
@@ -308,6 +317,7 @@ public class SolverTest {
     public void u1060() {
         long startTime = System.currentTimeMillis();
 
+        String fileName = "u1060";
         String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\u1060.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -326,7 +336,7 @@ public class SolverTest {
         Tour acoTour = aco.antColony(tour);
         acoTour.setCities(tour.getCities());
 
-        new WriteFile().writeFile("ch130.opt.tour", acoTour);
+        new WriteFile().writeFile(fileName + ".opt.tour", acoTour);
 
         long endTime = System.currentTimeMillis();
 
