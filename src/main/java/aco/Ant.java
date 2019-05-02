@@ -35,33 +35,32 @@ public class Ant
      * @param city
      * @return
      */
-    public boolean visitCity(int city)
+    public void visitCity(int city)
     {
         if(city != -1)
         {
             if (visitedCity[city])
-                return false;
+                return;
 
             visitedCity[city] = true;
             tour.addTourCity(city);
             //tour[cityNumber] = city;
             ++cityNumber;
 
-            return true;
         }
         else
         {
             //TODO: questa parte non va bene
             //tour.addTourCity(-1);
-            return true;
+
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
 
-    }
-
-    public void addTourTerminator()
-    {
-        tour.addTourCity(-1);
     }
 
     public int lastVisited()

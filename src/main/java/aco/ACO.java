@@ -40,34 +40,33 @@ public class ACO
     private static final int ANTS_NUMBER = 10;
     private int iterationNumber = 1000; //195 iterazioni e il 76 va a 0
 
-    private double c = 1.0;
     private double alpha = 0.1;
     private double beta = 2.0;
-    private double evaporation = 0.5;
-    private double Q0 = 0.95; //probabilità di scegliere tra exploration e exploitation
-    private double antFactor = 0.8; //bho
-    private double exploitation = 0.9; //possibilità di scegliere exploitation
-    private double t0; //initial pheromone
+    private double exploitation = 0.9; //probability to choose exploration or exploitation
 
+    //Seeds for random generators
     private int seed1 = 10_000_000;
     private int seed2 = 0;
 
     private Random randomGenerator = new Random(seed1);
-    Random rand = new Random(seed2);
+    private Random rand = new Random(seed2);
 
-    private int currentIndex = 0;
+    //private int currentIndex = 0;
 
     private int[][] distanceMatrix;
     private double[][] pheromoneMatrix;
-    private List<Ant> ants;
 
     public ACO()
     {
-        this.ants = new ArrayList<>();
+        this.randomGenerator = new Random(seed1);
+        this.rand = new Random(seed2);
     }
 
     public ACO(double alpha, double beta, double exploitation, int seed1, int seed2, int iterationNumber)
     {
+        this.randomGenerator = new Random(seed1);
+        this.rand = new Random(seed2);
+
         this.alpha = alpha;
         this.beta = beta;
         this.exploitation = exploitation;
@@ -82,7 +81,7 @@ public class ACO
         Ant bestAnt = null;
 
 
-        int tourSize = oldTour.getCities().size();
+        int tourSize = oldTour.getCities().size(); //Number cities on tour
         pheromoneMatrix = new double[tourSize][tourSize];
         distanceMatrix = oldTour.getDistanceMatrix();
 
@@ -98,8 +97,7 @@ public class ACO
 
         for(int iteration = 0; iteration < iterationNumber && (System.currentTimeMillis() - startTime) / 1000 < 175; iteration++)
         {
-            this.ants = new ArrayList<>();
-            //int tourSize = oldTour.getTour().size(); //Number of cities
+            List<Ant> ants = new ArrayList<>();
 
             //Distribute ants to cities
             for (int i = 0; i < ANTS_NUMBER; i++) {
@@ -107,9 +105,7 @@ public class ACO
                 ants.add(ant);
             }
 
-            currentIndex++; //number of visited city
-
-            //Muovo le formiche sul percorso
+            //Move ants on tour
             for (int c =0; c < tourSize - 1; c++) //add all cities to the tour for alla ants
             {
                 //for (int i = 0; i < ANTS_NUMBER; i++) //add cities for all ants
@@ -118,39 +114,31 @@ public class ACO
                     int nextCity = nextCity(a);
                     a.visitCity(nextCity);
 
-                    //updateLocalPheromone(pheromoneMatrix, lastInsertedCity, lastCity);
-                    // (1 - alpha) * costoArco + alpha * fermoneIniziale
                     int lastVisited = a.lastVisited();
                     int penultimateVisited = a.penultimateVisited();
 
+                    //update = (1.0 - alpha) * pheromoneBetweenLast2Cities + (alpha * startPheromone)
                     double updatePheromone = (1.0 - alpha) * pheromoneMatrix[lastVisited][penultimateVisited] + (alpha*startPheromone);
                     pheromoneMatrix[lastVisited][penultimateVisited] = updatePheromone;
                     pheromoneMatrix[penultimateVisited][lastVisited] = updatePheromone;
 
+                    //Update phermone with edges cost. Apparently it's not a good idea :(
                    // pheromoneMatrix[lastVisited][penultimateVisited] = (1.0-alpha)*distanceMatrix[lastVisited][penultimateVisited] + alpha*startPheromone;
                     //pheromoneMatrix[penultimateVisited][lastVisited] = (1.0-alpha)*distanceMatrix[lastVisited][penultimateVisited] + alpha*startPheromone;
-
-
-//                    pheromoneMatrix[a.lastVisited()][a.penultimateVisited()] = (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
-//                    pheromoneMatrix[a.penultimateVisited()][a.lastVisited()] = (1.0-alpha)*distanceMatrix[a.lastVisited()][a.penultimateVisited()] + alpha*startPheromone;
                 }
             }
 
 
-            //2OPT (deve finire con -1 il tour che gli passo nella mia versione)
+            //2OPT
             for(Ant a : ants)
             {
                 a.getAntTour().setBestKnown(oldTour.getBestKnown());
                 a.getAntTour().setDistanceMatrix(oldTour.getDistanceMatrix());
 
-                //a.addTourTerminator();
                 a.getAntTour().addTourCity(a.getAntTour().getTourCity(0));
-                //a.setAntTour(_2opt._2opt(a.getAntTour()));// MIA VERSIONE
 
-
-                _2opt._2opt(a.getAntTour(), startTime); //VERSIONE BRE
-
-                //a.getAntTour().computeTourCost();
+                //a.setAntTour(_2opt._2opt(a.getAntTour()));// COST VERSION
+                _2opt._2opt(a.getAntTour(), startTime); // GAIN VERSION
 
                 if(a.getAntTour().computeTourCost() < bestTour)
                 {
@@ -159,9 +147,7 @@ public class ACO
                 }
             }
 
-
-            //aggiorno fermone del percorso migliore
-
+            //update phermone on best tour
             for(int i = 0; i < bestAnt.getAntTour().getTour().size() - 1; i++)
             {
                 pheromoneMatrix[bestAnt.getAntTour().getTourCity(i)][bestAnt.getAntTour().getTourCity(i+1)] = (1.0-alpha) * pheromoneMatrix[bestAnt.getAntTour().getTourCity(i)][bestAnt.getAntTour().getTourCity(i+1)] + (alpha * 1.0/bestAnt.getAntTour().computeTourCost());
@@ -174,12 +160,14 @@ public class ACO
 
     private int nextCity(Ant ant)
     {
-        double rand = randomGenerator.nextDouble();
         boolean[] visitedCity = ant.getVisitedCity();
         int size = visitedCity.length;
+
         double probability = 0;
         double maxProbability = Double.MIN_VALUE;
-        int designedCity = -1;
+        int designedCity = -1; //next city to visit
+
+        double rand = randomGenerator.nextDouble();
 
         if(rand < exploitation)
         {
@@ -219,8 +207,6 @@ public class ACO
                 }
             }
 
-
-            //MIA VERSIONE
             for(Integer k : probabilities.keySet())
             {
                 if(!visitedCity[k])

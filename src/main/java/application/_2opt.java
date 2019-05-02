@@ -1,7 +1,5 @@
 package application;
 
-import java.util.List;
-
 public class _2opt
 {
 
@@ -9,20 +7,24 @@ public class _2opt
     {
         while(true)
         {
-            if(!trySwap(tour, startTime))
+            if(!swap(tour, startTime))
                 break;
         }
     }
 
-    private static boolean trySwap(Tour tour, long startTime) {
+    //2opt con gain
+    private static boolean swap(Tour tour, long startTime)
+    {
         int[][] distanceMatrix = tour.getDistanceMatrix();
         int size = tour.getTour().size();
         int gain;
         int best_gain = 0;
-        int index_i = 0;
-        int index_k = 0;
-        for (int i = 1; i < size - 1; i++) {
-            for (int k = i; k < size - 1; k++) {
+        int best_i = 0;
+        int best_k = 0;
+        for (int i = 1; i < size - 1; i++)
+        {
+            for (int k = i; k < size - 1; k++)
+            {
                 //gain = (a,d) + (b,c) - (c,d) - (a,b)
                 // a = i, b = k, c = k+1, d = i+1;
 
@@ -34,29 +36,34 @@ public class _2opt
                 int c = tour.getTour().get(k + 1);
                 int d = tour.getTour().get(i + 1);
 
-                if (Math.abs(i - k) < 2) {
+                if (Math.abs(i - k) < 2)
                     continue;
-                }
+
                 gain = distanceMatrix[a][d] + distanceMatrix[b][c] - distanceMatrix[d][c] - distanceMatrix[a][b];
-                if (gain > best_gain) {
+
+                if (gain > best_gain)
+                {
                     best_gain = gain;
-                    index_i = i;
-                    index_k = k;
+                    best_i = i;
+                    best_k = k;
                 }
             }
         }
 
-        if (best_gain > 0) {
-            int tempX = tour.getTour().get(index_i + 1);
-            tour.getTour().set(index_i + 1, tour.getTour().get(index_k));
-            tour.getTour().set(index_k, tempX);
+        if (best_gain > 0)
+        {
+            int tempX = tour.getTour().get(best_i + 1);
+            tour.getTour().set(best_i + 1, tour.getTour().get(best_k));
+            tour.getTour().set(best_k, tempX);
 
-            for (int ind = 0; ind < Math.abs(index_i - index_k) - 2; ind++) {
-                if (index_i + ind + 2 > index_k - ind - 1)
+            for (int i = 0; i < Math.abs(best_i - best_k) - 2; i++)
+            {
+                if (best_i + i + 2 > best_k - i - 1)
                     break;
-                int temp = tour.getTour().get(index_i + ind + 2);
-                tour.getTour().set(index_i + ind + 2, tour.getTour().get(index_k - ind - 1));
-                tour.getTour().set(index_k - ind - 1, temp);
+
+                int temp = tour.getTour().get(best_i + i + 2);
+                tour.getTour().set(best_i + i + 2, tour.getTour().get(best_k - i - 1));
+                tour.getTour().set(best_k - i - 1, temp);
             }
             return true;
         }
@@ -64,6 +71,7 @@ public class _2opt
         return false;
     }
 
+    //2opt con best distance
 //    public static Tour _2opt(Tour oldTour)
 //    {
 //        Tour tour = new Tour();
