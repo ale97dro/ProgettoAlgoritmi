@@ -12,7 +12,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "ch130";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\ch130.tsp";
+        String path = "problems/ch130.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -46,7 +46,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "dl198";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\d198.tsp";
+        String path = "problems/d198.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -80,7 +80,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "eil76";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\eil76.tsp";
+        String path = "problems/eil76.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -114,7 +114,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "fl1577";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\fl1577.tsp";
+        String path = "problems/fl1577.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -148,7 +148,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "kroA100";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\kroA100.tsp";
+        String path = "problems/kroA100.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -182,7 +182,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "lin318";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\lin318.tsp";
+        String path = "problems/lin318.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -216,7 +216,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "pcb442";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\PCB442.tsp";
+        String path = "problems/pcb442.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -250,7 +250,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "pr439";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\pr439.tsp";
+        String path = "problems/pr439.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -284,7 +284,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "rat783";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\RAT783.tsp";
+        String path = "problems/rat783.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
@@ -318,7 +318,7 @@ public class SolverTest {
         long startTime = System.currentTimeMillis();
 
         String fileName = "u1060";
-        String path = "D:\\alex2\\Desktop\\RepoGit\\ProgettoAlgoritmi\\problems\\u1060.tsp";
+        String path = "problems/u1060.tsp";
 
         Tour tour = new CityFileReader().read(path);
         tour.calcuateDistances(new EuclideanDistance());
