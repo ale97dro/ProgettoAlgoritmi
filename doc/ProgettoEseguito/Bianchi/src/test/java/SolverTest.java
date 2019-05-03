@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class SolverTest {
 
-    @Test(timeout = 181000)
+    /*@Test(timeout = 181000)
     public void ch130()
     {
         long startTime = System.currentTimeMillis();
@@ -107,7 +107,7 @@ public class SolverTest {
         System.out.println("Costo: " + acoTour.computeTourCost());
 
         System.out.println("\n\n");
-    }
+    }*/
 
     @Test(timeout = 181000)
     public void fl1577() {
@@ -124,7 +124,7 @@ public class SolverTest {
         tour.addTourCity(tour.getTour().get(0));
         int nnCost = tour.computeTourCost();
 
-        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 90, 3);
+        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 44, 3);
 
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
@@ -142,7 +142,7 @@ public class SolverTest {
 
         System.out.println("\n\n");
     }
-
+/*
     @Test(timeout = 181000)
     public void kroA100() {
         long startTime = System.currentTimeMillis();
@@ -278,7 +278,7 @@ public class SolverTest {
 
         System.out.println("\n\n");
     }
-
+*/
     @Test(timeout = 181000)
     public void rat783() {
         long startTime = System.currentTimeMillis();
@@ -294,7 +294,7 @@ public class SolverTest {
         tour.addTourCity(tour.getTour().get(0));
         int nnCost = tour.computeTourCost();
 
-        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 186, 10);
+        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 67, 10);
 
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
@@ -328,7 +328,7 @@ public class SolverTest {
         tour.addTourCity(tour.getTour().get(0));
         int nnCost = tour.computeTourCost();
 
-        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 71, 10);
+        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 23, 10);
 
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
