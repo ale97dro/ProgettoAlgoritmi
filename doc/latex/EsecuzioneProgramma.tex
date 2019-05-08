@@ -1,0 +1,37 @@
+\chapter*{Esecuzione programma}
+\label{cha_esecuzione}
+
+\section*{Piattaforma}
+\label{sec_piattaforma}
+La piattaforma usata è un computer portatile Lenovo W510. Nella Tabella~\ref{tab_statpc} sono mostrati alcuni parametri rilevanti.
+
+\begin{table}[htb]
+  \caption{Plattaforma usata per i test\label{tab_statpc}}
+  \centering
+\begin{tabular}{ll}
+  \toprule
+  Sistema Operativo		& Ubuntu 11.10 Oneiric Ocelot \\
+  Kernel			& 3.0.0-16-generic x86\_64 \\
+  Processore			& Intel Core i7 Q820 @ 1.73GHz \\
+  RAM				& 12GB \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+\section*{Compilazione ed esecuzione}
+\label{sec_comp_exec}
+Per compilare il software è presente un makefile, quindi è sufficiente digitare:
+\begin{lstlisting}
+$ make
+\end{lstlisting}
+Per eseguire il programma è sufficiente digitare:
+\begin{lstlisting}
+$ ./TSP -s seed -a algorithm -m map_file -t tour_file
+\end{lstlisting}
+dove \emph{seed} è il seme per inizializzare il random, nel caso venga specifica l'opzione \emph{-s} senza indicare un \emph{seed} esso sarà scelto autonomamente dall'applicazione, \emph{algorithm} rappresenta l'algoritmo da utilizzare fra quelli conosciuti dal software e infine \emph{map\_file} e \emph{tour\_file} rispettivamente il file contenente la mappa del problema e il file contenente il tour della soluzione trovata. Il programma produce anche un output minimale sul risultato ottenuto, di seguito è presente un esempio:
+\begin{lstlisting}[breaklines=true]
+$ ./TSP -m /home/mikol/TSP/map/ch130.tsp -t /home/mikol/TSP/sol/ch130.tour -a caso
+
+ch130 37410
+\end{lstlisting}
+

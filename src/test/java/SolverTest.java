@@ -45,7 +45,7 @@ public class SolverTest {
     public void d198() {
         long startTime = System.currentTimeMillis();
 
-        String fileName = "dl198";
+        String fileName = "d198";
         String path = "problems/d198.tsp";
 
         Tour tour = new CityFileReader().read(path);
@@ -124,7 +124,7 @@ public class SolverTest {
         tour.addTourCity(tour.getTour().get(0));
         int nnCost = tour.computeTourCost();
 
-        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 90, 3);
+        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 44, 3);
 
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
@@ -294,7 +294,7 @@ public class SolverTest {
         tour.addTourCity(tour.getTour().get(0));
         int nnCost = tour.computeTourCost();
 
-        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 186, 10);
+        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 67, 10);
 
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
@@ -328,7 +328,7 @@ public class SolverTest {
         tour.addTourCity(tour.getTour().get(0));
         int nnCost = tour.computeTourCost();
 
-        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 71, 10);
+        ACO aco = new ACO(0.1, 2, 0.9, 10_000_000, 0, 23, 10);
 
         tour.calcuateDistances(new EuclideanDistance());
         tour.setTourCost(nnCost);
